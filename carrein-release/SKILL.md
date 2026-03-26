@@ -1,5 +1,5 @@
 ---
-name: release
+name: carrein-release
 description: >
   Create a GitHub release with auto-generated version bump, release notes,
   and optional build artifacts. Use when the user says "release", "create

@@ -1,5 +1,5 @@
 ---
-name: codebase-audit
+name: carrein-audit
 description: >
   Assess codebase quality and realign conventions, documentation, and patterns
   that have drifted across multiple AI sessions. Use when the user says

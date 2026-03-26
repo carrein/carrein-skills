@@ -1,5 +1,5 @@
 ---
-name: commit-push
+name: carrein-commit
 description: >
   Stage all changes, split into logical commits, and push to the current
   branch. Use when the user says "commit", "push", "commit and push",

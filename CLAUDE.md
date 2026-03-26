@@ -11,7 +11,7 @@ A collection of Claude Code skills — reusable prompt frameworks that guide Cla
 Each skill lives in its own directory with a single `SKILL.md` file:
 
 ```
-skill-name/
+carrein-<name>/
   SKILL.md
 ```
 
@@ -19,9 +19,10 @@ skill-name/
 
 ## Existing Skills
 
-- **codebase-audit** — Assess code quality and realign conventions across AI sessions
-- **commit-push** — Stage, split into logical commits, and push to current branch
-- **release** — Bump version, generate release notes, create GitHub release via `gh`
+- **carrein-audit** — Assess code quality and realign conventions across AI sessions
+- **carrein-commit** — Stage, split into logical commits, and push to current branch
+- **carrein-uberthink** — Extended thinking, planning, sub-agents, and web research for high-complexity tasks
+- **carrein-release** — Bump version, generate release notes, create GitHub release via `gh`
 
 ## Conventions
 
