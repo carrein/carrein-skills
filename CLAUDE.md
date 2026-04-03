@@ -23,6 +23,7 @@ carrein-<name>/
 - **carrein-commit** — Stage, split into logical commits, and push to current branch
 - **carrein-uberthink** — Extended thinking, planning, sub-agents, and web research for high-complexity tasks
 - **carrein-release** — Bump version, generate release notes, create GitHub release via `gh`
+- **carrein-ebook-audit** — Audit an ebook library for filename, cover, and integrity issues
 
 ## Conventions
 
