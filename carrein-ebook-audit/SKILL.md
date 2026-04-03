@@ -39,12 +39,12 @@ all proposed changes for user approval before touching anything.
 ## Step 3: Cover Upgrade (Step 11)
 
 - Run the cover upgrade script:
-  python3 cover_upgrade.py .
+  PYTHONDONTWRITEBYTECODE=1 python3 cover_upgrade.py .
 - The script and its cache (`.cover_cache.json`) live in the stories
   folder alongside the ebooks
 - The cache skips files whose content hasn't changed since last audit
 - If the user asks for a fresh or full re-audit, pass `--no-cache`:
-  python3 cover_upgrade.py . --no-cache
+  PYTHONDONTWRITEBYTECODE=1 python3 cover_upgrade.py . --no-cache
 - Review the report output
 - If upgrades are available, present them to the user and ask for
   confirmation before running with `--apply`
