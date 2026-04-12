@@ -20,6 +20,7 @@ carrein-<name>/
 ## Existing Skills
 
 - **carrein-audit** — Assess code quality and realign conventions across AI sessions
+- **carrein-sync** — Sync documentation, CLAUDE.md files, and memory with codebase state
 - **carrein-commit** — Stage, split into logical commits, and push to current branch
 - **carrein-uberthink** — Extended thinking, planning, sub-agents, and web research for high-complexity tasks
 - **carrein-release** — Bump version, generate release notes, create GitHub release via `gh`
