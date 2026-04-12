@@ -18,15 +18,31 @@ all proposed changes for user approval before touching anything.
 ## Step 1: Read the Audit Checklist
 
 - Read `CLAUDE.md` in the current directory (or `.claude/CLAUDE.md`)
-  for the full audit checklist (steps 1-12)
+  for the full audit checklist (steps 1-12) and the audit cache section
 - If no `CLAUDE.md` exists or it has no audit steps, stop and tell the
   user — do not improvise a checklist
 
 ---
 
-## Step 2: Execute Audit Steps 1-10
+## Step 2: Check the Audit Cache
+
+- Read `.audit_cache.json` if it exists (keyed by content SHA-256)
+- Hash all ebook files and compare against the cache
+- **Normal audit**: skip per-file checks (steps 1-3, 7-8) for cached
+  books. Always run collection-wide checks (steps 4-6, 9-10).
+- **Full re-audit**: if the user says "full re-audit", "fresh audit",
+  or "re-audit all", delete `.audit_cache.json` and audit everything
+- **Selective re-audit**: if the user says "re-audit <book>", remove
+  that book's entry from `.audit_cache.json` and re-audit just that
+  book. Also pass it to the cover script via `--files`
+- After auditing new/changed books, update `.audit_cache.json`
+
+---
+
+## Step 3: Execute Audit Steps 1-10
 
 - Run each audit step (1 through 10) in the order defined in CLAUDE.md
+- Skip per-file checks for cached books (see Step 2)
 - Record every finding: bad filenames, missing covers, corrupt files,
   duplicate formats, metadata issues, and anything else the checklist
   calls for
@@ -36,23 +52,29 @@ all proposed changes for user approval before touching anything.
 
 ---
 
-## Step 3: Cover Upgrade (Step 11)
+## Step 4: Cover Upgrade (Step 11)
 
 - Run the cover upgrade script:
   PYTHONDONTWRITEBYTECODE=1 python3 cover_upgrade.py .
 - The script and its cache (`.cover_cache.json`) live in the stories
   folder alongside the ebooks
-- The cache skips files whose content hasn't changed since last audit
+- The cache is keyed by content hash — renames do not invalidate it
+- Upgrade images are saved to `.cover_upgrades/` during dry runs so
+  `--apply` can reuse them without re-fetching
 - If the user asks for a fresh or full re-audit, pass `--no-cache`:
   PYTHONDONTWRITEBYTECODE=1 python3 cover_upgrade.py . --no-cache
+- To re-check specific books, pass `--files` with exact filenames:
+  PYTHONDONTWRITEBYTECODE=1 python3 cover_upgrade.py . --files "Book.epub"
 - Review the report output
 - If upgrades are available, present them to the user and ask for
   confirmation before running with `--apply`
 - If no upgrades are found, note this and move on
+- **Apply cover upgrades BEFORE renaming files** — this keeps the
+  cover cache valid through the rename
 
 ---
 
-## Step 4: Collect & Confirm Changes (Step 12)
+## Step 5: Collect & Confirm Changes (Step 12)
 
 Collect ALL proposed changes from every audit step — renames, deletions,
 flags, cover upgrades — into a single summary table:
@@ -85,6 +107,8 @@ Wait for explicit user confirmation before executing any changes.
 Do not apply partial changes — present everything, then act on what
 the user approves.
 
+**Execution order**: apply cover upgrades first, then renames.
+
 ---
 
 ## Principles
@@ -98,3 +122,7 @@ the user approves.
   other reliable sources to confirm correct titles and author spellings.
 - **One summary, one confirmation.** Batch all proposed changes into
   a single table so the user can review everything at once.
+- **Covers before renames.** Always apply cover upgrades before renaming
+  files to preserve cache validity.
+- **Cache saves tokens.** Skip redundant work on cached books. Only
+  re-audit when the file content changes or the user explicitly asks.
